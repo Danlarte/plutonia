@@ -1,0 +1,21 @@
+# Dependencias de Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Archivos de entorno y logs
+.env
+.env.local
+*.log
+
+# Cache y archivos del sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Archivos temporales o de respaldo locales
+style2copia.css
+*.bak

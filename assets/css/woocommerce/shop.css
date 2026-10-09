@@ -1,0 +1,137 @@
+/* ==========================================================================
+   PLUTONIA WOOCOMMERCE STYLES
+   ========================================================================== */
+
+ .site-content {
+    background-color: #f8e4f0;
+ }
+.woocommerce-loop-product__title{
+    font-family: 'Unbounded', sans-serif !important;
+    font-size: 15px !important;
+}
+
+.woocommerce-js a.button{
+    font-size: 15px !important;
+}
+
+/* BANNER DE BIENVENIDA TIENDA */
+.banner-bienvenida-tienda {
+    background-color: #579AC4; 
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+    margin-top: 4.5rem;
+    text-align: center;
+    border: 2px solid #262626; 
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 6px 6px 0px #262626;
+}
+
+.banner-titulo {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #f8e4f0; 
+    display: block;
+}
+
+.banner-texto {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+    color: #f8e4f0;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .banner-titulo { font-size: 1.5rem; }
+    .banner-bienvenida-tienda { padding: 2rem 1rem; }
+}
+
+/* GRILLA DE PRODUCTOS (LOOK STICKER / POP KITSCH) */
+.woocommerce ul.products li.product a img,
+.woocommerce-page ul.products li.product a img {
+    border-radius: 12px;
+    border: 2px solid #262626; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.woocommerce ul.products li.product a:hover img,
+.woocommerce-page ul.products li.product a:hover img {
+    transform: translate(-4px, -4px);
+    box-shadow: 6px 6px 0px #262626; 
+}
+
+/* CARRITO FLOTANTE */
+.plutonia-carrito-flotante {
+    position: fixed !important;
+    bottom: 25px !important;
+    right: 25px !important;
+    background-color: #f8e4f0; 
+    color: #262626;
+    border: 2px solid #262626;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 4px 0px #262626;
+    z-index: 99999 !important;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.plutonia-carrito-flotante:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #262626;
+    background-color: #FFFEFC;
+}
+
+.plutonia-carrito-flotante svg {
+    width: 26px;
+    height: 26px;
+    fill: #262626;
+    pointer-events: none;
+}
+
+.plutonia-contador-flotante {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #262626;
+    color: #FFFEFC;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: 1px solid #FFFEFC;
+    pointer-events: none;
+}
+
+/* AJUSTES TIENDA Y CHECKOUT */
+.woocommerce-result-count,
+.woocommerce-ordering {
+    display: none !important;
+}
+
+.woocommerce-checkout h1.entry-title {
+    margin-top: 30px;
+}
+
+.woocommerce-checkout #billing_country_field {
+    display: none;
+}

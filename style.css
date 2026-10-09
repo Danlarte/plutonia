@@ -1,0 +1,1537 @@
+/*
+Theme Name: Astra Child
+Theme URI: https://wpastra.com/
+Description: Tema hijo para el proyecto Plutonia.
+Author: Studio Glick
+Author URI: https://wpastra.com/
+Template: astra
+Version: 1.0.0
+Text Domain: astra-child
+*/
+
+/* ==========================================================================
+   TIPOGRAFÍAS DE AUTOR - RUTAS DIRECTAS
+   ========================================================================== */
+
+@font-face {
+    font-family: 'Kooka';
+    src: url('fonts/Kooka-Bold.woff2') format('woff2'),
+         url('fonts/Kooka-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* --- RESET GLOBAL BASE --- */
+
+html, body {
+    max-width: 100%;
+    overflow-x: clip; 
+    position: relative;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html body p, 
+html body a:not(.v-nav-link) {
+    font-family: 'Unbounded', sans-serif !important;
+    font-weight: 400 !important;
+}
+
+h1, h2, h3, h4, h5, h6, 
+.hero-title, 
+.bento-main-title {
+    font-family: 'Kooka', serif !important;
+}
+h2 {
+  text-transform: none; /* Cancela el capitalize anterior y respeta el texto original del HTML */
+}
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+/* ==========================================================================
+   PLUTONIA HERO FULLSCREEN - ARCHITECTURE
+   ========================================================================== */
+
+/* Reset para neutralizar cabeceras de Astra */
+html body #page #masthead,
+html body #page .site-header,
+html body #page .main-header-bar,
+html body #page .ast-primary-header-bar,
+html body #page .main-header-bar-wrap,
+.home #masthead,
+.home .site-header,
+.home .main-header-bar,
+.home .ast-primary-header-bar,
+.home .main-header-bar-wrap {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    z-index: 9999 !important;
+}
+
+/* ==========================================================================
+   RESET ULTRA AGRESIVO PARA REVENTAR EL MARGEN DE ASTRA EN EL HERO
+   ========================================================================== */
+
+.page-template-home #page, 
+.page-template-home #page .site-content,
+.page-template-home #page #content,
+.page-template-home #primary,
+.page-template-home #main {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* solo estira el contenedor en el Hero */
+.page-template-home .site-content .ast-container,
+.page-template-home #content .ast-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: block !important;
+}
+
+/* Restaurar la posición fija de la barra de administración en la plantilla */
+.page-template-home.admin-bar #masthead {
+    top: 32px !important;
+}
+
+/* Hacer que el contenedor del header no empuje el contenido hacia abajo */
+#plutonia-react-header-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+/* Remover márgenes/paddings superiores del contenido principal de Astra */
+.site-content, #content, .ast-container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* --- VISTA MOBILE (por defecto para pantallas pequeñas) --- */
+.plutonia-logo-container {
+  margin-left: 0; /* Bien pegado a la izquierda */
+  padding-left: 1rem; /* Un pequeño margen interno para que no toque el borde del celular */
+  margin-top: 3rem;
+}
+
+/* --- VISTA ESCRITORIO (pantallas desde 1024px de ancho) --- */
+@media (min-width: 1024px) {
+  .plutonia-logo-container {
+    margin-left: 220px; /* Se desplaza 180px a la derecha solo en PC */
+    padding-left: 0;
+  }
+}
+
+html body.admin-bar #masthead,
+.home.admin-bar #masthead {
+    top: 32px !important;
+}
+
+/* --- CONTENEDOR HERO (ANCLA DE GSAP) --- */
+.plutonia-hero-fullscreen {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #262626;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Generar el espacio de profundidad 3D sobre el título */
+.main-title-container,
+.hero-title {
+    perspective: 1000px;
+    backface-visibility: hidden;
+}
+
+/* Ocultamos el H1 SOLO cuando todavía NO tiene los spans adentro */
+.hero-title:not(:has(.char)) {
+    opacity: 0 !important;
+}
+
+/* Forzar a cada letra a ser un bloque independiente para que responda a transformaciones */
+.hero-title .char {
+    display: inline-block;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+.hero-bg-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+    opacity: 0.75; 
+    will-change: transform;
+}
+
+.spacing{
+    height: 8rem;
+    background-color: #f7d5e4;
+}
+
+/* ==========================================================================
+   ESTILOS EXCLUSIVOS PARA EL MENÚ DEL HEADER EN HOME.PHP
+   ========================================================================== */
+
+.page-template-home .main-header-bar-navigation .menu-item .menu-link,
+.page-template-home #masthead .menu-link {
+    color: #f7d5e4 !important; 
+    font-family: 'Unbounded', sans-serif !important;
+    font-size: 16px !important;
+    letter-spacing: 1px !important;
+}
+
+/* --- INTERFAZ / MENÚ VERTICAL --- */
+
+.hero-ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    perspective: 1000px;
+}
+
+.vertical-menu-left {
+    font-family: 'Unbounded', sans-serif;
+    position: absolute;
+    top: 55%;
+    left: 16%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    pointer-events: auto;
+}
+
+.v-nav-link {
+    font-family: 'Unbounded', sans-serif;
+    color: #f7d5e4;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 400;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+    opacity: 0;
+    display: inline-block;
+    will-change: transform, opacity;
+    transform-style: preserve-3d;
+}
+
+.v-nav-link:hover {
+    color: #ffffff;
+}
+
+/* --- CONTENEDOR DEL TÍTULO PRINCIPAL --- */
+.main-title-container {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.hero-title {
+    font-family: 'Kooka', serif !important;
+    font-size: 14vw;
+    color: #f7d5e4;
+    margin: 0 0 60px 0;
+    line-height: 0.8;
+    letter-spacing: -2px;
+    text-transform: capitalize !important;
+}
+
+/* Control de tamaño para el contenedor del carrito de Astra */
+.ast-site-header-cart svg,
+.ast-site-header-cart i {
+    font-size: 1.5rem !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 768px) {
+    .vertical-menu-left {
+        left: 2%;
+        gap: 20px;
+    }
+    .v-nav-link {
+        font-size: 0.85rem;
+    }
+    .hero-title {
+        font-size: 18vw;
+        bottom: 8%;
+    }
+}
+
+/* =========================================================
+   CONTENEDOR DE TÍTULO Y BOTÓN CENTRADO ANIMACION MOUSE
+   ========================================================= */
+
+.main-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem; /* Espacio entre el H1 y el ícono */
+}
+.scroll-label {
+    color: #f7d5e4;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: lowercase;
+    opacity: 0.9;
+}
+/* Reemplazar los estilos anteriores de .scroll-down-wrapper */
+/* =========================================================
+   FORZAR COLUMNA VERTICAL: TEXTO ARRIBA, ÍCONO ABAJO
+   ========================================================= */
+
+.scroll-down-wrapper {
+    display: flex !important;
+    flex-direction: column !important; /* Fuerza apilamiento vertical */
+    align-items: center !important;     /* Centra horizontalmente ambos elementos */
+    justify-content: center !important;
+    gap: 8px !important;                 /* Separación entre texto e ícono */
+    text-decoration: none !important;
+    margin: 1.5rem auto 0 auto !important;
+    cursor: pointer;
+}
+
+.scroll-label {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: lowercase;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.scroll-icon {
+    display: block !important;
+    margin: 0 auto !important;
+    width: 30px !important;
+    height: 48px !important;
+    min-width: 30px !important;
+    min-height: 48px !important;
+    max-width: 30px !important;
+    max-height: 48px !important;
+}
+
+/* Animación de la rueda del mouse */
+.mouse-wheel {
+    animation: scrollWheelAnim 1.8s infinite ease-in-out;
+}
+
+@keyframes scrollWheelAnim {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    51% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   TEXTO VERTICAL LATERAL CON FLECHA SVG
+   ========================================================= */
+
+.vertical-text-right {
+    position: fixed;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+    pointer-events: none;
+
+    /* Alineación interna */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.vertical-label {
+    display: block;
+    color: #333333; /* O el color exacto de tu tipografía */
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+    opacity: 0.8;
+    
+    /* Modo de escritura vertical de arriba hacia abajo */
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+}
+
+.vertical-arrow {
+    width: 16px;
+    height: 16px;
+    color: #333333; /* Hereda el mismo color del texto */
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+/* Ocultar en dispositivos móviles para no recargar la pantalla */
+@media (max-width: 768px) {
+    .vertical-text-right {
+        display: none !important;
+    }
+}
+
+/* --------------------------------------------------------- */
+/* ------------------- Sección Bento ----------------------- */ 
+/* --------------------------------------------------------- */
+
+.bento-section-trigger {
+    background-color: #f7d5e4; 
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 10;
+    overflow: hidden;
+}
+
+/* Contenedor retendido centrado sin desplazamientos */
+.bento-sticky-wrapper {
+    height: 100vh !important;
+    height: 100dvh !important;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Tipografías Bento */
+.bento-main-title {
+    font-family: 'Kooka', sans-serif;
+    color: #262626;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: 20px;
+}
+
+.bento-sub-text {
+    font-family: 'Unbounded', sans-serif;
+    color: #262626;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 550px;
+}
+
+/* Grilla Bento */
+.bento-grid-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+    
+    box-sizing: border-box;
+    transform-origin: 50% 50%;
+    will-change: transform;
+}
+
+.bento-item {
+    overflow: hidden;
+    position: relative;
+    border-radius: 6px;
+    will-change: transform, opacity;
+}
+
+.bento-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bento-item.item-4 {
+    z-index: 2;
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
+
+/* Distribución exacta de celdas */
+.item-1 { grid-column: 1 / 4; grid-row: 1 / 9; }   /* Tocador */
+.item-2 { grid-column: 4 / 7; grid-row: 1 / 4; }   /* Pileta */
+.item-3 { grid-column: 7 / 9; grid-row: 1 / 4; }   /* Ollitas */
+.item-4 { grid-column: 4 / 9; grid-row: 4 / 10; }  /* Cocinita */
+.item-5 { grid-column: 9 / 13; grid-row: 1 / 6; }  /* Galletitas manos */
+.item-6 { grid-column: 1 / 4; grid-row: 9 / 13; }  /* Dirigible */
+.item-7 { grid-column: 4 / 6; grid-row: 10 / 13; } /* Vasitos */
+.item-8 { grid-column: 6 / 9; grid-row: 10 / 13; } /* Fideos ositos */
+.item-9 { grid-column: 9 / 13; grid-row: 6 / 13; } /* Globos de agua */
+
+/* Capa de protección para la sección subsiguiente */
+.bento-section-trigger + section,
+.bento-section-trigger + div {
+    position: relative;
+    z-index: 20;
+}
+
+/* =========================================================
+   BENTO GRID - CORRECCIÓN DE ESCALA Y CENTRADO MOVIL
+   ========================================================= */
+
+/* Asegurar que el ítem central esté perfectamente alineado desde su punto de origen */
+.bento-item-4 {
+    transform-origin: center center !important;
+    margin: 0 auto !important;
+}
+
+.bento-item-4 img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+}
+
+/* Reglas específicas para Pantallas Móviles */
+@media (max-width: 768px) {
+    .bento-grid-container,
+    .bento-sticky-wrapper {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+    }
+
+    /* Cuando la imagen central llega a su escala máxima en móvil */
+    .bento-item-4.is-fullscreen,
+    .bento-item-4 {
+        width: 100vw !important;
+        height: 100vh !important;
+        left: 0 !important;
+        top: 0 !important;
+        border-radius: 0 !important; /* Elimina bordes redondeados al cubrir pantalla completa */
+    }
+}
+
+/* ==========================================================================
+   SECCIONES DE TEXTO Y ANIMACIONES
+   ========================================================================== */
+
+.box-text-container {
+    text-align: center;
+    max-width: 800px;
+    z-index: 5;
+    padding: 0 5%;
+    color: #262626;
+    font-size: 1.1rem !important;
+    line-height: 1.2;
+}
+
+.box-text-container-title {
+    font-size: 2.9rem !important;
+    color: #262626;
+    line-height: 3rem;
+    
+}
+
+.seccion-fullscreen {
+    background-color: #f7d5e4;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.split-word {
+    display: inline-block !important;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    margin-right: 0.25em;
+}
+.seccion-fullscreen-2 {
+    background-color: #f7d5e4;
+    width: 100%;
+    height:70dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================================
+   DESVANECER CONTENIDO AL HACER SCROLL
+   ========================================================= */
+
+.seccion-fullscreen-2 {
+    view-timeline-name: --seccion-2-scroll;
+    view-timeline-axis: block;
+}
+
+
+.seccion-fullscreen-2 h2,
+.seccion-fullscreen-2 p {
+    animation: fade-seccion-2 linear both;
+    animation-timeline: --seccion-2-scroll;
+    animation-range: exit 0% exit 65%;
+}
+
+@keyframes fade-seccion-2 {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+}
+
+
+/* =========================================================
+   GALERÍA SCROLL (PISTA DE RECORRIDO)
+   ========================================================= */
+
+.gsap-gallery {
+    position: relative;
+    width: 100%;
+    height: 350vh; /* Controla la velocidad: a menor altura, más rápido avanza */
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #f7d5e4;
+}
+
+/* =========================================================
+   GALERÍA FULLSCREEN (STICKY NATIVO)
+   ========================================================= */
+
+.gsap-panels-wrapper {
+    position: sticky !important;
+    top: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    background: #FCEEF5;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.panel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.panel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    will-change: transform, opacity;
+}
+
+.panel img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+}
+/* ---------- parrallax seccion ----------*/
+/* Contenedor del parallax */
+/* Parallax Banner */
+/* Contenedor principal que se va a congelar */
+/* Contenedor que define la altura del bloque */
+.parrallax {
+  position: relative !important;
+  width: 100%;
+  height: 80vh; /* Altura de la ventana */
+  clip-path: inset(0 0 0 0); /* Crea una máscara estricta para cortar la imagen */
+  overflow: hidden;
+}
+
+/* La imagen queda congelada fija en el fondo */
+.parrallax img {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Ocupa la pantalla completa por detrás */
+  object-fit: cover;
+  z-index: -1; /* Pasa por debajo del resto del sitio */
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+    .parrallax img {
+        transform: scale(0.85) !important;
+        transform-origin: center center !important;
+    }
+}
+
+/* =========================================================
+   GALERÍA HORIZONTAL CON GSAP SCROLLTRIGGER
+   ========================================================= */
+
+/* Estilos de contexto para pruebas */
+.section-intro,
+.section-outro {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7d5e4;
+    color: #f7d5e4;
+    text-align: center;
+}
+
+/* Secciones de fijado (Pinning) */
+.horizontal-gallery-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #f7d5e4;
+}
+
+.horizontal-gallery-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Tira horizontal de tarjetas */
+.gallery-strip {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 4vw;
+    padding: 0 10vw;
+    will-change: transform;
+}
+
+/* =========================================================
+   ENQUADRE CENTRADO ABSOLUTO PARA CARDS
+   ========================================================= */
+
+.gallery-card {
+    flex: 0 0 28vw;
+    height: 70vh;
+    aspect-ratio: 3 / 4; /* Fuerza la proporción vertical 3:4 */
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.card-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.card-inner img {
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: center center !important; /* Mantiene el foco en el centro exacto */
+    transform: translate(-50%, -50%) !important; /* Centrado físico */
+    will-change: transform;
+}
+
+/* Leyenda */
+.card-caption {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    padding: 0.5rem 1rem;
+    background: #262626;
+    backdrop-filter: blur(8px);
+    color: #f7d5e4;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    z-index: 2;
+}
+/* =========================================================
+   GALERÍA HORIZONTAL - AJUSTES PARA MÓVIL
+   ========================================================= */
+
+
+@media (max-width: 768px) {
+
+    /* 1. Darle aire al contenedor para que el pin de GSAP no ahoque la tarjeta */
+    .horizontal-gallery-wrapper {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. Forzar a que la tarjeta entre completa en la pantalla */
+    .horizontal-gallery-section .gallery-card,
+    .gallery-strip > div {
+        width: 80vw !important;            /* Muestra 1 tarjeta principal en pantalla */
+        min-width: 80vw !important;
+        max-width: 80vw !important;
+        height: 75vh !important;           /* Reduce la altura para dar espacio vertical */
+        max-height: 580px !important;      /* Evita que se estire demasiado en pantallas altas */
+        margin-right: 4vw !important;      /* Separación entre tarjetas */
+        padding: 1.5rem !important;        /* Padding interno para que el contenido respire */
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+
+    /* 3. Ajuste de la imagen/óvalo interior para que no se corte */
+    .gallery-card img,
+    .gallery-card .card-media,
+    .gallery-card .oval-container {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 60% !important;        /* Limita la altura del óvalo para no desbordar */
+        object-fit: contain !important;     /* Garantiza que la imagen de la empanada/comida se vea completa */
+        margin: 0 auto !important;
+    }
+
+    /* 4. Mantenemos el botón/etiqueta abajo con espacio cómodo */
+    .gallery-card .card-tag,
+    .gallery-card button,
+    .gallery-card span {
+        margin-top: 1rem !important;
+        flex-shrink: 0 !important;
+    }
+    .card-caption{
+        margin-left: 16px;
+        
+        
+    }
+}
+
+
+/* =========================================================
+   FRUIT ROLL - SCROLL CSS
+   ========================================================= */
+
+
+.fruit-roll-section {
+    position: relative;
+    width: 100%;
+    height: 590px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: #f7d5e4;
+    view-timeline-name: --fruit-scroll;
+    view-timeline-axis: block;
+
+    isolation: isolate;
+}
+
+
+/* =========================================================
+   TRACK
+   ========================================================= */
+
+.fruit-roll-track {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: max-content;
+    min-width: max-content;
+    height: 100%;
+
+    /*gap: clamp(70px, 9vw, 140px);*/
+
+    padding-left: 8vw;
+    padding-right: 8vw;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   OBJETOS
+   ========================================================= */
+
+.fruit-roll-track .roll-item {
+
+    display: block;
+    flex: 0 0 auto;
+    width: clamp(170px, 18vw, 280px);
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    object-fit: contain;
+    transform-origin: center center;
+    animation-name: fruit-roll-animation;
+    animation-duration: 1ms;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-timeline: --fruit-scroll;
+    animation-range: entry 0% exit 100%;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* =========================================================
+   ANIMACIÓN
+   ========================================================= */
+
+@keyframes fruit-roll-animation {
+
+    from {
+        transform:
+            translateX(-400px)
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            translateX(400px)
+            rotate(720deg);
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    .fruit-roll-section {
+        height: 250px;
+    }
+
+    .fruit-roll-track {
+        gap: 60px;
+    }
+
+    .fruit-roll-track .roll-item {
+        width: clamp(150px, 22vw, 230px);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .fruit-roll-section {
+        height: 210px;
+    }
+
+    .fruit-roll-track {
+        gap: 40px;
+
+        padding-left: 10vw;
+        padding-right: 10vw;
+    }
+
+    .fruit-roll-track .roll-item {
+        width: clamp(125px, 38vw, 480px);
+    }
+
+}
+
+/* =========================================================
+   SECCIÓN CIERRE DE STORYTELLING (HOME)
+   ========================================================= */
+.plutonia-final-section {
+    background-color: #f7d5e4;
+    padding: 1rem;
+}   
+
+.plutonia-closing-section {
+    padding: 6rem 1rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    background-color: #f7d5e4;
+}
+
+.closing-header {
+    text-align: center;
+    margin-bottom: 8rem;
+    height: 100%;
+}
+
+.closing-subtitle {
+    font-size: 0.85rem;
+    text-transform: lowercase;
+    letter-spacing: 3px;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.closing-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+/* Bento Grid */
+.closing-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    max-width: 800px;  /* Conserva el tamaño exacto actual */
+    margin-left: auto;  /* Empuja desde la izquierda */
+    margin-right: auto; /* Empuja desde la derecha */
+    margin-bottom: 16rem;
+    width: 100%;       /* Para que sea responsivo si la pantalla mide menos de 800px */
+}
+
+/* Tarjetas con la paleta pastel de Plutonia */
+.closing-card {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-decoration: none;
+    color: #262626;
+    min-height: 380px;
+    background-color: #f7d5e4; /* O tu variable de color según la card */
+    transition: transform 0.4s ease, box-shadow 0.4s ease, color 0.3s ease, background-color 0.3s ease;
+}
+
+
+.card-overlay {
+    position:relative;
+    inset: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: 2;
+}
+
+/* Transición de textos */
+.closing-card h3,
+.closing-card .card-tag,
+.closing-card .card-link-text {
+    color: #262626;
+    transition: color 0.3s ease;
+}
+
+.closing-card:hover,
+.closing-card:hover h3,
+.closing-card:hover .card-tag,
+.closing-card:hover .card-link-text {
+    color: #EA559D !important; /* Color rosa de tu paleta */
+}
+
+.closing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(234, 85, 157, 0.22);
+}
+
+/* Distribución de columnas */
+.card-talleres { 
+    grid-column: span 12; 
+    background-color: #FCEEF5; /* Fondo rosa pastel claro en lugar de negro */
+    max-width: 800px;
+    margin-left: auto;  /* Empuja desde la izquierda */
+    margin-right: auto; /* Empuja desde la derecha */
+    margin-bottom: 8rem;
+    justify-content: center;
+}
+.card-coleccion { grid-column: span 6; }
+.card-rayito { grid-column: span 6; }
+
+@media (max-width: 900px) {
+    .card-coleccion, .card-rayito { grid-column: span 12; }
+}
+
+/* Fondos e imágenes */
+.card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center 85%;
+    transition: transform 0.6s ease;
+    z-index: 1;
+}
+
+.closing-card:hover .card-bg {
+    transform: scale(1.05);
+}
+
+.card-content {
+    position: relative;
+    z-index: 3;
+}
+
+.card-tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
+    margin-bottom: 0rem;
+    display: block;
+}
+
+.closing-card h3 {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.card-link-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+/* Formulario de Newsletter */
+.newsletter-form-inline {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+    max-width: 450px;
+}
+
+.newsletter-form-inline input[type="email"] {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: #f7d5e4;
+    color: #EA559D;
+    outline: none;
+}
+
+.newsletter-form-inline button {
+    background: #262626;
+    color: #f7d5e4;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.3s ease;
+}
+
+.newsletter-form-inline button:hover {
+    background: #EA559D;
+}
+
+
+/* =========================================================
+   AJUSTE DE TÍTULO H2 MANIFIESTO (MÓVIL)
+   ========================================================= */
+
+@media (max-width: 768px) {
+    h2.box-text-container-title {
+        line-height: 1.15 !important;      /* Interlineado ajustado a la fuente Kooka */
+        margin-bottom: 1rem !important;    /* Reduce la separación con el párrafo inferior */
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* =========================================================
+   AJUSTE EXCLUSIVO: CARD TALLERES / NEWSLETTER (MÓVIL)
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* 1. Contenedor principal de la tarjeta */
+    .closing-card.card-talleres {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important; /* Centra todo el bloque verticalmente */
+        align-items: center !important;
+        padding: 2rem 1.5rem !important;
+        height: auto !important;
+        min-height: 360px !important;
+        box-sizing: border-box !important;
+        margin-bottom: 8rem !important;
+    }
+
+    /* 2. Bloque interno (.card-content) alineado a la izquierda */
+    .closing-card.card-talleres .card-content {
+        width: 100% !important;
+        max-width: 320px !important; /* Define un ancho contenedor para centrar todo el bloque en la card */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important; /* Alinea los elementos hijos al borde izquierdo */
+        text-align: left !important;
+        margin: 0 auto !important;
+    }
+
+    /* 3. Etiqueta superior ("CREAR TAMBIÉN ES RECORDAR") */
+    .closing-card.card-talleres .card-tag {
+        display: block !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        margin-bottom: 0.5rem !important;
+        text-align: left !important;
+        align-self: flex-start !important;
+    }
+
+    /* 4. Título H3 ("PRÓXIMO WORKSHOP") */
+    .closing-card.card-talleres h3 {
+        font-size: 1.5rem !important;
+        line-height: 1.15 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0.75rem !important;
+        text-align: left !important;
+        align-self: flex-start !important;
+    }
+
+    /* 5. Textos explicativos */
+    .closing-card.card-talleres p {
+        font-size: 0.9rem !important;
+        line-height: 1.35 !important;
+        width: 100% !important;
+        margin: 0 0 1rem 0 !important; /* Sin margin-auto para evitar desalineaciones */
+        text-align: left !important;
+        align-self: flex-start !important;
+    }
+
+    /* 6. Formulario e Input */
+    .closing-card.card-talleres .newsletter-form-inline {
+        width: 100% !important;
+        margin: 0.5rem 0 0 0 !important;
+        align-self: flex-start !important;
+    }
+
+}
+
+/*====================================*/
+/*       ESTILOS DE LA TIENDA         */
+/*====================================*/
+
+/* 1. Header flotante sobre el Hero */
+header.plutonia-header {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+    z-index: 10000 !important;
+}
+
+/* 2. Quitar padding top del contenedor de Astra/WooCommerce */
+.woocommerce-page #content,
+.woocommerce-page #primary,
+.woocommerce-page .site-content,
+#plutonia-react-header-root + #content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* 3. Hero de Ancho Completo (Contenedor Principal) */
+.banner-bienvenida-tienda.hero-full-width {
+    position: relative !important;
+    width: 100vw !important;
+    left: 50% !important;
+    right: 50% !important;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
+    margin-top: 0 !important;
+    margin-bottom: 2rem !important;
+    min-height: 850px !important;
+    height: 75vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    border-bottom: 2px solid #262626;
+    box-sizing: border-box !important;
+    background: transparent !important;
+}
+
+/* 4. Imagen de Fondo (Picture & Img) */
+.banner-bienvenida-tienda.hero-full-width picture {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
+}
+
+.banner-bienvenida-tienda.hero-full-width picture img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    display: block !important;
+}
+
+/* 5. Tarjeta Glassmorphism Centrada sobre la Imagen */
+.hero-glass-overlay {
+    position: relative !important;
+    z-index: 3 !important;
+    max-width: 600px;
+    width: 90%;
+    padding: 1rem 1rem;
+    text-align: center;
+    color: transparent;
+    margin-top: 18rem; /* Desplazamiento sutil para no tapar el header */
+    
+    /* Efecto Glass */
+    background: rgba(174, 193, 207, 0.55) !important;
+    backdrop-filter: blur(12px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(160%) !important;
+    
+    border: 2px solid #262626;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0px #262626;
+}
+
+/* Tipografía */
+h1.banner-titulo {
+    font-family: 'Kooka', sans-serif;
+    font-size: 3rem;
+    margin: 0 0 0.8rem 0;
+    color: #FCEEF5;
+    text-shadow: 2px 2px 0px #262626;
+    letter-spacing: 0.5px;
+}
+
+.banner-texto {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+    line-height: 1.6;
+    margin: 0;
+    color: #FCEEF5;
+    font-weight: 400;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================================
+   AJUSTES ESPECÍFICOS PARA MÓVIL (≤ 768px)
+   ========================================================= */
+
+@media (max-width: 768px) {
+    /* Hero adaptable a pantalla completa en celular */
+    .banner-bienvenida-tienda.hero-full-width {
+        height: 100vh !important;
+        height: 100dvh !important;
+        min-height: auto !important;
+        margin-bottom: 1.5rem !important;
+        border-bottom: none !important;
+    }
+
+    /* Imagen vertical centrada */
+    .banner-bienvenida-tienda.hero-full-width picture img {
+        object-fit: cover !important;
+        object-position: center center !important;
+    }
+
+    /* Cuadro glass compacto sin tapar header */
+    .hero-glass-overlay {
+        max-width: 360px !important;
+        padding: 1.25rem 1rem !important;
+        margin-top: 80px !important;
+        backdrop-filter: blur(8px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(8px) saturate(150%) !important;
+    }
+
+    .banner-titulo {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .banner-texto {
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+    }
+}
+
+/*==============================*/
+/* Container Popup Flotante */
+/*==============================*/
+
+.shipping-card-popup {
+    position: fixed;
+    bottom: 125px;
+    right: 25px;
+    z-index: 99999;
+    width: 250px;
+    background-color:#FCEEF5;
+    border: 2px solid #262626;
+    border-radius: 12px;
+    padding: 1.1rem 1rem 0.9rem 1rem;
+    box-shadow: 4px 4px 0px #262626;
+    font-family: 'Unbounded', sans-serif;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    animation: slideInPopup 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shipping-card-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #262626;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.shipping-card-badge {
+    background-color: #5c97bf;
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid #262626;
+    border-radius: 6px;
+    box-shadow: 1px 1px 0px #262626;
+}
+
+.shipping-card-body {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.shipping-line {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.shipping-line p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #262626;
+    line-height: 1.25;
+}
+
+.shipping-icon {
+    font-size: 1.2rem;
+}
+
+.shipping-divider-line {
+    height: 1px;
+    background-color: #e0e0e0;
+}
+
+@keyframes slideInPopup {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .shipping-card-popup {
+        bottom: 15px;
+        left: 15px;
+        width: 210px;
+    }
+}
